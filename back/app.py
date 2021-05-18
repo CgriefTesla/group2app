@@ -1,23 +1,24 @@
 from flask import Flask
 from flask import request, make_response, jsonify
 from flask_cors import CORS
+import pandas as pd 
 
 app = Flask(__name__, static_folder="./build/static", template_folder="./build")
 CORS(app) #Cross Origin Resource Sharing
+gasoline = pd.read_csv('./gasoline.csv', header=0)
 
 @app.route("/", methods=['GET'])
 def index():
-    return "text parser:)"
+    print(gasoline)
+    return 'hello'
 
-@app.route("/api", methods=['GET'])
-def parse():
-    #print(request.get_json()) # -> {'post_text': 'テストテストテスト'}
-    # data = request.get_json()
-    # text = data['post_text']
-
-    res = 'done api'
-    response = {'result': res}
-    #print(response)
+@app.route("/search", methods=['POST'])
+def search():
+    data = request.get_json()
+    print(data)
+    # ここでいろいろと処理をする
+    
+    response = {'result': 'hello'}
     return make_response(jsonify(response))
 
 if __name__ == "__main__":
